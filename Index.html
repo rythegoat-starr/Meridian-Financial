@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f8fb">
+<title>Meridian Financial</title>
+<style>
+:root{--bg:#f5f7fb;--white:#fff;--ink:#172033;--muted:#7b879a;--line:#e5e9f1;--blue:#245fe8;--green:#16845b;--red:#cf4545;--dark:#0d1420;--dark2:#121c2a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}
+.header{height:72px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.header-inner{max-width:1400px;height:100%;margin:auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:41px;height:41px;background:var(--blue);color:white;border-radius:12px;display:grid;place-items:center;font-size:22px;font-weight:900}
+.brand-name{font-size:17px;font-weight:850}.brand-sub{font-size:9px;letter-spacing:1.5px;color:var(--muted);margin-top:4px}
+.profile{display:flex;align-items:center;gap:10px;border:0;background:none;text-align:left}.avatar{width:39px;height:39px;border-radius:50%;background:#e8eeff;color:#2455c5;display:grid;place-items:center;font-weight:800}
+.profile-name{font-size:12px;font-weight:750}.profile-sub{font-size:11px;color:var(--muted);margin-top:4px}
+main{max-width:1400px;margin:auto;padding:25px 22px 105px}.page{display:none}.page.active{display:block}
+.heading{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:22px}
+h1{font-size:30px;letter-spacing:-1px;margin:0}h2{font-size:17px;margin:0}h3{font-size:13px;margin:0}
+.subtitle{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.6}
+.grid{display:grid;gap:17px}.two{grid-template-columns:1.2fr 1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:white;border:1px solid var(--line);border-radius:17px;padding:20px;min-width:0}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.balance-card{background:linear-gradient(125deg,#1749c7,#3778f5);color:white;border:0;position:relative;overflow:hidden}
+.balance-card:after{content:"";position:absolute;width:220px;height:220px;right:-110px;top:-135px;border:1px solid #ffffff35;border-radius:50%;box-shadow:0 0 0 30px #ffffff0b,0 0 0 60px #ffffff08;pointer-events:none}
+.label{font-size:12px;color:var(--muted)}.balance-card .label{color:#e1eaff}
+.balance{display:block;font-size:clamp(31px,5vw,43px);font-weight:850;letter-spacing:-1.5px;background:none;border:0;color:white;padding:0;margin:13px 0 24px;text-align:left;position:relative;z-index:1}
+.actions{display:flex;gap:9px;flex-wrap:wrap;position:relative;z-index:1}
+.btn{border:0;background:var(--blue);color:white;padding:12px 15px;border-radius:10px;font-size:12px;font-weight:750}
+.btn.white{background:white;color:#2053c6}.btn.glass{background:#ffffff18;border:1px solid #ffffff55;color:white}
+.btn.outline{background:white;color:var(--ink);border:1px solid var(--line)}.btn.danger{background:#fff0f0;color:var(--red)}
+.stat-number{font-size:24px;font-weight:800;margin-top:12px}.note{font-size:11px;color:var(--muted);margin-top:7px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0;padding-bottom:0}.row:first-child{padding-top:0}
+.row-left{display:flex;align-items:center;gap:11px;min-width:0}.round{width:40px;height:40px;flex-shrink:0;border-radius:12px;background:#edf2ff;color:#285bd0;display:grid;place-items:center;font-size:12px;font-weight:800}
+.row-title{font-size:12px;font-weight:750}.row-sub{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
+.row-value{font-size:12px;font-weight:750;white-space:nowrap}.link{border:0;background:none;color:var(--blue);font-size:12px;font-weight:750;padding:5px}.spaced{margin-top:18px}
+.nav-wrap{position:fixed;bottom:0;left:0;right:0;z-index:20;background:#fffffffa;border-top:1px solid var(--line);padding:8px 12px calc(8px + env(safe-area-inset-bottom))}
+.nav{max-width:650px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.nav button{border:0;background:none;color:var(--muted);padding:13px 4px;border-radius:10px;font-size:12px;font-weight:750}.nav button.active{background:#edf2ff;color:var(--blue)}
+/* Professional trading terminal */
+.market-shell{background:var(--dark);color:#e9eef7;border-radius:17px;overflow:hidden;border:1px solid #1e2a3a}
+.market-topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:15px 17px;border-bottom:1px solid #273346}
+.market-brand{font-size:12px;font-weight:850;letter-spacing:1px}.market-live{font-size:10px;color:#91a0b5;margin-top:5px}
+.market-tape{display:flex;overflow:auto;scrollbar-width:none;border-bottom:1px solid #273346}.market-tape::-webkit-scrollbar{display:none}
+.tape-item{flex:0 0 auto;min-width:120px;padding:12px 15px;border-right:1px solid #273346;font-size:10px}
+.tape-item b{display:block;font-size:11px;color:#eef3fb;margin-bottom:5px}.up{color:#25c994!important}.down{color:#ff6577!important}
+.market-layout{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:580px}
+.market-sidebar{background:#111a27;border-right:1px solid #273346;min-width:0}
+.search-wrap{padding:12px;border-bottom:1px solid #273346}.search{width:100%;padding:11px;border:1px solid #334155;border-radius:8px;font-size:12px;background:#0c1420;color:white;outline:none}
+.categories{display:flex;gap:5px;padding:10px;flex-wrap:wrap;border-bottom:1px solid #273346}
+.category{border:1px solid #344154;background:#182333;color:#a9b6c8;padding:7px 9px;border-radius:7px;font-size:10px;font-weight:750}
+.category.active{background:#234a42;border-color:#287a65;color:#5de0b2}
+.asset-list{max-height:660px;overflow:auto}.asset{display:flex;align-items:center;gap:8px;padding:11px 10px;border:0;border-bottom:1px solid #202c3b;background:transparent;color:#e7edf6;width:100%;text-align:left}
+.asset:hover{background:#1a2737}.asset.selected{background:#1a2c3a;box-shadow:inset 3px 0 #25c994}
+.asset-icon{width:31px;height:31px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;background:#243246;color:#dce6f5;font-size:10px;font-weight:850}
+.asset-copy{flex:1;min-width:0}.asset-name{font-size:11px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.asset-symbol{font-size:10px;color:#8291a6;margin-top:4px}.asset-change{font-size:10px;text-align:right;white-space:nowrap}
+.asset-star{border:0;background:none;color:#7f8ca1;font-size:18px;padding:3px}.asset-star.saved{color:#f5c451}
+.chart-area{min-width:0;background:#0d1420}.chart-title{padding:17px 18px 13px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.chart-symbol{font-size:20px;font-weight:850;letter-spacing:-.5px}.chart-description{font-size:11px;color:#8c9bb0;margin-top:5px}
+.chart-badge{font-size:9px;color:#59dcb0;background:#18352f;border:1px solid #285648;border-radius:6px;padding:7px 9px;font-weight:850;letter-spacing:.6px}
+.quote-price{font-size:27px;font-weight:850;letter-spacing:-.8px;margin-top:12px}.quote-change{font-size:11px;margin-top:5px}
+.terminal-tools{display:flex;gap:5px;flex-wrap:wrap;padding:0 17px 12px}
+.tool-btn{border:1px solid #344154;background:#172333;color:#aebbd0;padding:7px 10px;border-radius:6px;font-size:10px}.tool-btn.active{background:#234c42;color:#5ce0b2;border-color:#2c7e68}
+.chart-frame{height:365px;width:100%;position:relative;background:#0d1420}.chart-frame canvas{width:100%;height:100%;display:block;touch-action:pan-y}
+.terminal-bottom{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#273346;border-top:1px solid #273346}
+.terminal-stat{background:#111a27;padding:12px 14px;color:#8290a5;font-size:10px}.terminal-stat strong{display:block;color:#e8edf5;font-size:12px;margin-top:6px}
+.chart-caption{padding:11px 15px;color:#8290a5;font-size:10px;line-height:1.6;border-top:1px solid #273346}
+.market-disclaimer{font-size:10px;color:#7b879a;margin-top:10px;line-height:1.6}
+.balance-link{border:0;background:none;padding:0;margin:12px 0 15px;font-size:30px;font-weight:800;letter-spacing:-1px;color:var(--ink);text-align:left}
+.detail-row{display:flex;justify-content:space-between;gap:10px;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px}
+.backdrop{position:fixed;inset:0;z-index:40;background:#10182b80;display:none;align-items:center;justify-content:center;padding:17px}.backdrop.open{display:flex}
+.modal{width:100%;max-width:430px;max-height:90vh;overflow:auto;background:white;border-radius:20px;padding:23px}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.close{width:35px;height:35px;border:0;border-radius:10px;background:#f0f2f7;font-size:21px}
+.field{margin:15px 0}.field label{display:block;font-size:12px;font-weight:750;margin-bottom:8px}
+.field input,.field select{width:100%;padding:13px;border:1px solid #dfe5ef;border-radius:11px;background:white;color:var(--ink)}
+.modal-actions{display:flex;gap:10px;margin-top:20px}.modal-actions>*{flex:1}
+.empty{padding:28px 10px;text-align:center;font-size:12px;color:var(--muted);line-height:1.7}
+.toast{position:fixed;z-index:60;bottom:100px;left:50%;transform:translate(-50%,12px);opacity:0;pointer-events:none;background:#172033;color:white;padding:13px 17px;border-radius:12px;font-size:12px;transition:.2s;max-width:90%;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:850px){.market-layout{grid-template-columns:1fr}.market-sidebar{border-right:0;border-bottom:1px solid #273346}.asset-list{max-height:260px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.asset{border-right:1px solid #202c3b}.chart-frame{height:350px}}
+@media(max-width:600px){main{padding:20px 12px 100px}.header-inner{padding:0 12px}.two{grid-template-columns:1fr}.stats{gap:9px}.card{padding:16px}h1{font-size:26px}.profile-copy{display:none}.brand-name{font-size:14px}.brand-sub{font-size:8px}.market-layout{display:flex;flex-direction:column}.market-sidebar{width:100%}.asset-list{grid-template-columns:1fr 1fr;max-height:240px}.asset{padding:9px 6px;gap:5px}.asset-icon{width:27px;height:27px}.asset-name{font-size:10px}.asset-change{font-size:9px}.chart-frame{height:300px}.quote-price{font-size:24px}.terminal-stat{padding:10px 8px}.terminal-bottom{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header class="header">
+ <div class="header-inner">
+  <div class="brand"><div class="logo">M</div><div><div class="brand-name">Meridian Financial</div><div class="brand-sub">PERSONAL FINANCE</div></div></div>
+  <button class="profile" onclick="openProfile()"><div class="avatar" id="avatar">AH</div><div class="profile-copy"><div class="profile-name" id="profileName">Account Holder</div><div class="profile-sub">Personal account</div></div></button>
+ </div>
+</header>
+<main>
+<section class="page active" id="homePage">
+ <div class="heading"><div><h1 id="greeting">Welcome back</h1><div class="subtitle">Here's your financial overview.</div></div><button class="btn outline" onclick="showPage('accounts')">View accounts</button></div>
+ <div class="grid two">
+  <div class="card balance-card"><div class="label">Total balance</div><button class="balance" id="totalBalance" onclick="editBalance('checking')">$0.00</button><div class="actions"><button class="btn white" onclick="addFunds('checking')">Add funds</button><button class="btn glass" onclick="transferModal()">Transfer</button></div></div>
+  <div class="grid stats"><div class="card"><div class="label">Checking</div><div class="stat-number" id="checkingStat">$0.00</div><div class="note">•••• 2048</div></div><div class="card"><div class="label">Savings</div><div class="stat-number" id="savingsStat">$0.00</div><div class="note">•••• 7316</div></div></div>
+ </div>
+ <div class="grid two spaced"><div class="card"><div class="card-head"><h2>Your accounts</h2><button class="link" onclick="showPage('accounts')">View all</button></div><div id="homeAccounts"></div></div><div class="card"><div class="card-head"><h2>Recent activity</h2><button class="link" onclick="showPage('activity')">View all</button></div><div id="homeActivity"></div></div></div>
+ <div class="card spaced"><div class="card-head"><h2>Markets</h2><button class="link" onclick="showPage('trading')">Explore markets</button></div><div id="homeWatchlist"></div></div>
+</section>
+
+<section class="page" id="accountsPage">
+ <div class="heading"><div><h1>Accounts</h1><div class="subtitle">Your accounts and balances.</div></div><button class="btn" onclick="transferModal()">Transfer</button></div>
+ <div class="grid two">
+  <div class="card"><div class="card-head"><h2>Checking account</h2><span class="chart-badge">CHECKING</span></div><div class="label">Available balance</div><button class="balance-link" id="checkingBalance" onclick="editBalance('checking')">$0.00</button><div class="note">Account number •••• 2048</div><div class="actions spaced"><button class="btn" onclick="addFunds('checking')">Add funds</button><button class="btn outline" onclick="editBalance('checking')">Account details</button></div></div>
+  <div class="card"><div class="card-head"><h2>Savings account</h2><span class="chart-badge">SAVINGS</span></div><div class="label">Available balance</div><button class="balance-link" id="savingsBalance" onclick="editBalance('savings')">$0.00</button><div class="note">Account number •••• 7316</div><div class="actions spaced"><button class="btn" onclick="addFunds('savings')">Add funds</button><button class="btn outline" onclick="editBalance('savings')">Account details</button></div></div>
+ </div>
+ <div class="card spaced"><div class="card-head"><h2>Account information</h2></div><div class="detail-row"><span class="label">Account holder</span><strong id="ownerDetail">Account Holder</strong></div><div class="detail-row"><span class="label">Account type</span><strong>Personal</strong></div><div class="detail-row"><span class="label">Currency</span><strong>USD — US Dollar</strong></div></div>
+</section>
+
+<section class="page" id="tradingPage">
+ <div class="heading"><div><h1>Markets</h1><div class="subtitle">Explore crypto, stocks, ETFs, forex, indices and commodities.</div></div><span class="chart-badge">MARKET TERMINAL</span></div>
+ <div class="market-shell">
+  <div class="market-topbar"><div><div class="market-brand">MERIDIAN MARKETS</div><div class="market-live">Market overview · interactive chart workspace</div></div><div style="font-size:10px;color:#91a0b5">USD · Simulated market data</div></div>
+  <div class="market-tape" id="marketTape"></div>
+  <div class="market-layout">
+   <aside class="market-sidebar">
+    <div class="search-wrap"><input class="search" id="assetSearch" placeholder="Search symbol or market..." oninput="renderAssets" autocomplete="off"></div>
+    <div class="categories" id="categories"></div>
+    <div class="asset-list" id="assetList"></div>
+   </aside>
+   <div class="chart-area">
+    <div class="chart-title"><div><div class="chart-symbol" id="chartSymbol">Bitcoin · BTC</div><div class="chart-description" id="chartDescription">Cryptocurrency market</div><div class="quote-price" id="quotePrice">$0.00</div><div class="quote-change" id="quoteChange">+0.00% today</div></div><span class="chart-badge">CHART</span></div>
+    <div class="terminal-tools"><button class="tool-btn active" onclick="setTimeframe('1m',this)">1m</button><button class="tool-btn" onclick="setTimeframe('5m',this)">5m</button><button class="tool-btn" onclick="setTimeframe('15m',this)">15m</button><button class="tool-btn" onclick="setTimeframe('1H',this)">1H</button><button class="tool-btn" onclick="setTimeframe('4H',this)">4H</button><button class="tool-btn" onclick="setTimeframe('1D',this)">1D</button><button class="tool-btn" onclick="setTimeframe('1W',this)">1W</button><button class="tool-btn" onclick="setTimeframe('1M',this)">1M</button></div>
+    <div class="chart-frame"><canvas id="priceCanvas" aria-label="Simulated candlestick chart"></canvas></div>
+    <div class="terminal-bottom"><div class="terminal-stat">OPEN<strong id="statOpen">—</strong></div><div class="terminal-stat">DAY RANGE<strong id="statRange">—</strong></div><div class="terminal-stat">VOLUME<strong id="statVolume">—</strong></div></div>
+    <div class="chart-caption">Green candles indicate a rising interval; red candles indicate a falling interval. Prices and candles are illustrative simulated data, not live quotes.</div>
+   </div>
+  </div>
+ </div>
+ <div class="market-disclaimer">This market workspace is for exploration and learning. It does not place orders or connect to a brokerage.</div>
+ <div class="grid two spaced"><div class="card"><div class="card-head"><h2>Market coverage</h2></div><div class="row"><span class="row-title">Cryptocurrencies</span><span class="label">Digital assets</span></div><div class="row"><span class="row-title">Stocks and ETFs</span><span class="label">Listed securities</span></div><div class="row"><span class="row-title">Forex</span><span class="label">Currency pairs</span></div><div class="row"><span class="row-title">Indices and commodities</span><span class="label">Global markets</span></div></div><div class="card"><div class="card-head"><h2>Watchlist</h2><span class="chart-badge" id="watchCount">0 SAVED</span></div><div id="savedWatchlist"></div><div class="note">Tap the star beside any market to save it here.</div></div></div>
+</section>
+
+<section class="page" id="activityPage">
+ <div class="heading"><div><h1>Activity</h1><div class="subtitle">Your account activity.</div></div><button class="btn outline" onclick="clearActivity()">Clear history</button></div>
+ <div class="card"><div class="card-head"><h2>Recent activity</h2></div><div id="fullActivity"></div></div>
+</section>
+</main>
+<nav class="nav-wrap"><div class="nav"><button class="active" data-page="home" onclick="showPage('home')">Home</button><button data-page="accounts" onclick="showPage('accounts')">Accounts</button><button data-page="trading" onclick="showPage('trading')">Trading</button><button data-page="activity" onclick="showPage('activity')">Activity</button></div></nav>
+<div class="backdrop" id="backdrop" onclick="backdropClose(event)"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><h2 id="modalTitle">Account</h2><button class="close" onclick="closeModal()">×</button></div><div id="modalContent"></div></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+"use strict";
+const KEY="meridian_financial_state_v3";
+const CATEGORIES=["All","Crypto","Stocks","ETFs","Indices","Forex","Commodities"];
+const assets=[
+["Bitcoin","BTC","Crypto",67400,2.1],["Ethereum","ETH","Crypto",3500,1.4],["Solana","SOL","Crypto",172,4.2],["XRP","XRP","Crypto",.62,-1.2],["Dogecoin","DOGE","Crypto",.16,3.4],["Cardano","ADA","Crypto",.45,-.8],["BNB","BNB","Crypto",590,1.1],["Avalanche","AVAX","Crypto",36,2.7],["Chainlink","LINK","Crypto",17.2,-1.4],["Polkadot","DOT","Crypto",7.1,.6],["Litecoin","LTC","Crypto",82,-.5],["Bitcoin Cash","BCH","Crypto",470,1.7],["TRON","TRX","Crypto",.12,.9],["Toncoin","TON","Crypto",6.8,-2.2],["Shiba Inu","SHIB","Crypto",.000024,1.8],["Sui","SUI","Crypto",1.4,3.1],["Pepe","PEPE","Crypto",.000009,-1.6],
+["Apple","AAPL","Stocks",225,.8],["Microsoft","MSFT","Stocks",430,-.4],["NVIDIA","NVDA","Stocks",130,2.6],["Amazon","AMZN","Stocks",190,1.2],["Alphabet","GOOGL","Stocks",175,.4],["Meta Platforms","META","Stocks",510,-.7],["Tesla","TSLA","Stocks",250,3.5],["AMD","AMD","Stocks",165,-1.8],["Netflix","NFLX","Stocks",680,1.4],["Broadcom","AVGO","Stocks",170,2.2],["Palantir","PLTR","Stocks",26,4.1],["JPMorgan Chase","JPM","Stocks",205,.5],["Walmart","WMT","Stocks",68,.3],["Berkshire Hathaway","BRK.B","Stocks",410,-.2],["Coca-Cola","KO","Stocks",62,.1],["Disney","DIS","Stocks",100,-1.1],["Coinbase","COIN","Stocks",245,2.8],
+["SPDR S&P 500 ETF","SPY","ETFs",545,.7],["Invesco QQQ ETF","QQQ","ETFs",470,1.1],["Vanguard Total Market ETF","VTI","ETFs",275,.5],["Vanguard S&P 500 ETF","VOO","ETFs",500,.6],["iShares Bitcoin Trust","IBIT","ETFs",38,2.3],["SPDR Gold Shares","GLD","ETFs",215,.4],
+["S&P 500","SPX","Indices",5300,.8],["Nasdaq 100","NDX","Indices",18500,1.3],["Dow Jones","DJI","Indices",39000,.2],["Russell 2000","RUT","Indices",2050,-.5],["VIX Volatility Index","VIX","Indices",14.5,-2.4],["FTSE 100","UKX","Indices",8250,.3],["DAX","DAX","Indices",18400,.6],["Nikkei 225","NI225","Indices",39000,1.1],
+["EUR / USD","EURUSD","Forex",1.085,.15],["GBP / USD","GBPUSD","Forex",1.27,-.2],["USD / JPY","USDJPY","Forex",157,.3],["USD / CAD","USDCAD","Forex",1.37,-.1],["AUD / USD","AUDUSD","Forex",.66,.12],["USD / CHF","USDCHF","Forex",.9,.08],["EUR / GBP","EURGBP","Forex",.85,-.14],["EUR / JPY","EURJPY","Forex",170,.24],
+["Gold","GOLD","Commodities",2350,.7],["Silver","SILVER","Commodities",30,1.2],["WTI Crude Oil","USOIL","Commodities",78,-.9],["Brent Crude Oil","UKOIL","Commodities",82,-.5],["Natural Gas","NATGAS","Commodities",2.5,1.7],["Copper","COPPER","Commodities",4.5,.4],["Platinum","PLATINUM","Commodities",1000,-.3],["Palladium","PALLADIUM","Commodities",950,.6]
+].map(([name,symbol,category,price,change])=>({name,symbol,category,price,change}));
+
+let state=loadState(),currentCategory="All",currentAsset=assets[0],timeframe="1m",toastTimer;
+function loadState(){const defaults={checking:0,savings:0,owner:"Account Holder",activity:[],watchlist:["BTC","ETH","AAPL","NVDA","SPY","EURUSD","GOLD"]};try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(!s)return defaults;return{checking:amount(s.checking),savings:amount(s.savings),owner:typeof s.owner==="string"&&s.owner.trim()?s.owner.slice(0,60):defaults.owner,activity:Array.isArray(s.activity)?s.activity.slice(0,200):[],watchlist:Array.isArray(s.watchlist)?s.watchlist.filter(x=>assets.some(a=>a.symbol===x)).slice(0,100):defaults.watchlist}}catch(e){return defaults}}
+function amount(n){n=Number(n);return Number.isFinite(n)&&n>=0?Math.round(n*100)/100:0}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast("Unable to save changes.")}}
+function fmt(n){return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(Number(n)||0)}
+function safe(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function toast(s){const el=document.getElementById("toast");el.textContent=s;el.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove("show"),2400)}
+function showPage(n){if(!["home","accounts","trading","activity"].includes(n))return;document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(n+"Page").classList.add("active");document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===n));if(n==="trading"){renderAssets();drawCandles()}window.scrollTo({top:0,behavior:"smooth"})}
+function record(title,detail){state.activity.unshift({title,detail,date:new Date().toISOString()});state.activity=state.activity.slice(0,200);save()}
+function renderAccounts(){document.getElementById("totalBalance").textContent=fmt(state.checking+state.savings);document.getElementById("checkingStat").textContent=fmt(state.checking);document.getElementById("savingsStat").textContent=fmt(state.savings);document.getElementById("checkingBalance").textContent=fmt(state.checking);document.getElementById("savingsBalance").textContent=fmt(state.savings);document.getElementById("ownerDetail").textContent=state.owner;document.getElementById("profileName").textContent=state.owner;document.getElementById("avatar").textContent=state.owner.split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0].toUpperCase()).join("")||"AH";const h=new Date().getHours();document.getElementById("greeting").textContent=(h<12?"Good morning":h<18?"Good afternoon":"Good evening")+(state.owner==="Account Holder"?"":", "+state.owner.split(" ")[0]);document.getElementById("homeAccounts").innerHTML=["checking","savings"].map(a=>`<div class="row"><div class="row-left"><div class="round">${a==="checking"?"C":"S"}</div><div><div class="row-title">${a==="checking"?"Checking account":"Savings account"}</div><div class="row-sub">•••• ${a==="checking"?"2048":"7316"}</div></div></div><button class="link row-value" onclick="editBalance('${a}')">${fmt(state[a])}</button></div>`).join("")}
+function editBalance(a){modal("Update balance",`<form onsubmit="saveBalance(event,'${a}')"><div class="field"><label for="balanceInput">Balance in USD</label><input id="balanceInput" type="number" min="0" max="999999999" step=".01" inputmode="decimal" value="${state[a].toFixed(2)}" required></div><div class="modal-actions"><button type="button" class="btn outline" onclick="closeModal()">Cancel</button><button class="btn">Save changes</button></div></form>`)}
+function saveBalance(e,a){e.preventDefault();const n=Number(document.getElementById("balanceInput").value);if(!Number.isFinite(n)||n<0||n>999999999){toast("Enter a valid amount.");return}const old=state[a];state[a]=Math.round(n*100)/100;record("Balance updated",`${a} balance changed from ${fmt(old)} to ${fmt(state[a])}`);save();renderAll();closeModal();toast("Balance updated.")}
+function addFunds(a){modal("Add funds",`<form onsubmit="submitAdd(event,'${a}')"><div class="field"><label for="fundAmount">Amount in USD</label><input id="fundAmount" type="number" min=".01" max="999999999" step=".01" inputmode="decimal" placeholder="0.00" required></div><p class="note">This updates the balance displayed in this browser; it does not move real money.</p><div class="modal-actions"><button type="button" class="btn outline" onclick="closeModal()">Cancel</button><button class="btn">Continue</button></div></form>`)}
+function submitAdd(e,a){e.preventDefault();const n=Number(document.getElementById("fundAmount").value);if(!Number.isFinite(n)||n<=0||n>999999999){toast("Enter a valid amount.");return}state[a]=Math.round((state[a]+n)*100)/100;record("Balance updated",`${fmt(n)} added to ${a}`);save();renderAll();closeModal();toast("Balance updated.")}
+function transferModal(){modal("Transfer funds",`<form onsubmit="submitTransfer(event)"><div class="field"><label for="from">From account</label><select id="from"><option value="checking">Checking — ${fmt(state.checking)}</option><option value="savings">Savings — ${fmt(state.savings)}</option></select></div><div class="field"><label for="to">To account</label><select id="to"><option value="savings">Savings — ${fmt(state.savings)}</option><option value="checking">Checking — ${fmt(state.checking)}</option></select></div><div class="field"><label for="transferAmount">Amount in USD</label><input id="transferAmount" type="number" min=".01" max="999999999" step=".01" inputmode="decimal" placeholder="0.00" required></div><div class="modal-actions"><button type="button" class="btn outline" onclick="closeModal()">Cancel</button><button class="btn">Confirm transfer</button></div></form>`)}
+function submitTransfer(e){e.preventDefault();const f=document.getElementById("from").value,t=document.getElementById("to").value,n=Number(document.getElementById("transferAmount").value);if(f===t){toast("Choose different accounts.");return}if(!Number.isFinite(n)||n<=0||n>999999999){toast("Enter a valid amount.");return}if(n>state[f]){toast("Insufficient balance.");return}state[f]=Math.round((state[f]-n)*100)/100;state[t]=Math.round((state[t]+n)*100)/100;record("Account transfer",`${fmt(n)} from ${f} to ${t}`);save();renderAll();closeModal();toast("Balances updated.")}
+function renderActivity(id,limit){const el=document.getElementById(id),items=state.activity.slice(0,limit||state.activity.length);if(!items.length){el.innerHTML='<div class="empty">No recent activity</div>';return}el.innerHTML=items.map(x=>`<div class="row"><div class="row-left"><div class="round">↻</div><div><div class="row-title">${safe(x.title)}</div><div class="row-sub">${safe(x.detail)}</div><div class="row-sub">${safe(new Date(x.date).toLocaleString())}</div></div></div></div>`).join("")}
+function clearActivity(){if(!state.activity.length){toast("No activity to clear.");return}modal("Clear history",`<p class="subtitle">Clear all activity entries?</p><div class="modal-actions"><button class="btn outline" onclick="closeModal()">Cancel</button><button class="btn danger" onclick="confirmClear()">Clear history</button></div>`)}
+function confirmClear(){state.activity=[];save();renderAll();closeModal();toast("History cleared.")}
+function modal(title,content){document.getElementById("modalTitle").textContent=title;document.getElementById("modalContent").innerHTML=content;document.getElementById("backdrop").classList.add("open")}
+function closeModal(){document.getElementById("backdrop").classList.remove("open")}
+function backdropClose(e){if(e.target.id==="backdrop")closeModal()}
+function openProfile(){modal("Profile",`<form onsubmit="saveProfile(event)"><div class="field"><label for="ownerName">Display name</label><input id="ownerName" maxlength="60" value="${safe(state.owner)}" required></div><div class="modal-actions"><button type="button" class="btn outline" onclick="closeModal()">Cancel</button><button class="btn">Save changes</button></div></form>`)}
+function saveProfile(e){e.preventDefault();const n=document.getElementById("ownerName").value.trim();if(!n){toast("Enter a name.");return}state.owner=n.slice(0,60);save();renderAll();closeModal();toast("Profile updated.")}
+
+/* Market terminal */
+function quoteFor(a){return{price:a.price,change:a.change}}
+function renderCategories(){document.getElementById("categories").innerHTML=CATEGORIES.map(c=>`<button class="category ${c===currentCategory?"active":""}" onclick="setCategory('${c}')">${c}</button>`).join("")}
+function setCategory(c){currentCategory=c;renderCategories();renderAssets()}
+function renderAssets(){const q=(document.getElementById("assetSearch").value||"").trim().toLowerCase();const filtered=assets.filter(a=>(currentCategory==="All"||a.category===currentCategory)&&(`${a.name} ${a.symbol} ${a.category}`).toLowerCase().includes(q));document.getElementById("assetList").innerHTML=filtered.length?filtered.map(a=>{const saved=state.watchlist.includes(a.symbol);return `<div class="asset ${a.symbol===currentAsset.symbol?"selected":""}"><button onclick="selectAsset('${a.symbol}')" style="display:flex;align-items:center;gap:8px;flex:1;min-width:0;border:0;background:transparent;color:inherit;text-align:left;padding:0"><div class="asset-icon">${safe(a.symbol.slice(0,2))}</div><div class="asset-copy"><div class="asset-name">${safe(a.name)}</div><div class="asset-symbol">${safe(a.symbol)} · ${safe(a.category)}</div></div><div class="asset-change ${a.change>=0?"up":"down"}">${a.change>=0?"+":""}${a.change.toFixed(2)}%</div></button><button class="asset-star ${saved?"saved":""}" title="Toggle watchlist" onclick="toggleWatch('${a.symbol}')">${saved?"★":"☆"}</button></div>`}).join(""):'<div class="empty">No matching markets found.</div>'}
+function selectAsset(symbol){const a=assets.find(x=>x.symbol===symbol);if(!a)return;currentAsset=a;renderAssets();loadChart();if(window.innerWidth<850)document.querySelector(".chart-area").scrollIntoView({behavior:"smooth",block:"start"})}
+function setTimeframe(tf,btn){timeframe=tf;document.querySelectorAll(".terminal-tools .tool-btn").forEach(b=>b.classList.toggle("active",b===btn));drawCandles()}
+function toggleWatch(symbol){const i=state.watchlist.indexOf(symbol);if(i>=0)state.watchlist.splice(i,1);else state.watchlist.unshift(symbol);state.watchlist=state.watchlist.slice(0,100);save();renderAssets();renderWatchlist();toast(i>=0?"Removed from watchlist.":"Added to watchlist.")}
+function loadChart(){const a=currentAsset;document.getElementById("chartSymbol").textContent=a.name+" · "+a.symbol;document.getElementById("chartDescription").textContent=a.category+" market / USD";document.getElementById("quotePrice").textContent=formatPrice(a.price);const ch=document.getElementById("quoteChange");ch.textContent=(a.change>=0?"+":"")+a.change.toFixed(2)+"% today";ch.className="quote-change "+(a.change>=0?"up":"down");document.getElementById("statOpen").textContent=formatPrice(a.price*(1-a.change/100*.4));document.getElementById("statRange").textContent=formatPrice(a.price*.972)+" – "+formatPrice(a.price*1.019);document.getElementById("statVolume").textContent=(Math.random()*85+4).toFixed(1)+"M";drawCandles()}
+function formatPrice(n){return n<.01?"$"+n.toFixed(6):n<1?"$"+n.toFixed(4):n.toLocaleString("en-US",{style:"currency",currency:"USD",maximumFractionDigits:2})}
+function renderTape(){const symbols=["BTC","ETH","AAPL","NVDA","TSLA","SPY","EURUSD","GOLD","MSFT","SOL","SPX","XRP"];document.getElementById("marketTape").innerHTML=symbols.map(sym=>{const a=assets.find(x=>x.symbol===sym);return a?`<div class="tape-item"><b>${safe(a.symbol)}</b><span class="${a.change>=0?"up":"down"}">${a.change>=0?"▲":"▼"} ${Math.abs(a.change).toFixed(2)}%</span></div>`:""}).join("")}
+function renderWatchlist(){const saved=state.watchlist.map(s=>assets.find(a=>a.symbol===s)).filter(Boolean);const row=a=>`<div class="row"><div class="row-left"><div class="round">${safe(a.symbol.slice(0,2))}</div><div><div class="row-title">${safe(a.name)}</div><div class="row-sub">${safe(a.symbol)} · ${safe(a.category)}</div></div></div><button class="link" onclick="selectAsset('${a.symbol}');showPage('trading')">Chart</button></div>`;document.getElementById("savedWatchlist").innerHTML=saved.length?saved.map(row).join(""):'<div class="empty">No saved assets.</div>';document.getElementById("watchCount").textContent=saved.length+" SAVED";document.getElementById("homeWatchlist").innerHTML?saved.slice(0,4).map(row).join(""):"";document.getElementById("homeWatchlist").innerHTML=saved.length?saved.slice(0,4).map(row).join(""):'<div class="empty">Your watchlist is empty.</div>'}
+function renderAll(){renderAccounts();renderActivity("homeActivity",4);renderActivity("fullActivity");renderWatchlist()}
+
+/* Draws the entire chart locally: no external scripts or iframe needed. */
+function drawCandles(){const canvas=document.getElementById("priceCanvas");if(!canvas)return;const rect=canvas.getBoundingClientRect();if(rect.width<10)return;const dpr=Math.min(window.devicePixelRatio||1,2),w=rect.width,h=rect.height;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);const ctx=canvas.getContext("2d");ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle="#0d1420";ctx.fillRect(0,0,w,h);const a=currentAsset,base=a.price,change=a.change,pad={l:12,r:66,t:16,b:26},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b,n=Math.max(24,Math.floor(cw/9));let value=base*(1-change/100*.65);const candles=[];let trend=change/100/Math.max(n,1);for(let i=0;i<n;i++){const open=value;const noise=(Math.random()-.49)*.012;value=Math.max(base*.7,value*(1+noise+trend*.2));const close=value;const wick=Math.random()*.006; candles.push({o:open,c:close,hi:Math.max(open,close)*(1+wick),lo:Math.min(open,close)*(1-wick)})}candles[n-1].c=base;candles[n-1].hi=Math.max(candles[n-1].hi,base*1.002);candles[n-1].lo=Math.min(candles[n-1].lo,base*.998);const min=Math.min(...candles.map(c=>c.lo)),max=Math.max(...candles.map(c=>c.hi)),span=max-min||base*.01;const y=p=>pad.t+(max-p)/span*ch;ctx.font="10px Arial";ctx.strokeStyle="#243142";ctx.lineWidth=1;for(let i=0;i<=5;i++){const yy=pad.t+ch*i/5;ctx.beginPath();ctx.moveTo(pad.l,yy);ctx.lineTo(w-pad.r+2,yy);ctx.stroke();ctx.fillStyle="#8290a5";const val=max-span*i/5;ctx.fillText(val<.01?val.toFixed(6):val<1?val.toFixed(4):val.toLocaleString("en-US",{maximumFractionDigits:2}),w-pad.r+7,yy+3)}const slot=cw/n,bw=Math.max(2,slot*.58);candles.forEach((c,i)=>{const x=pad.l+i*slot+slot/2,up=c.c>=c.o,color=up?"#25c994":"#ff6577";ctx.strokeStyle=color;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,y(c.hi));ctx.lineTo(x,y(c.lo));ctx.stroke();ctx.fillStyle=color;const top=Math.min(y(c.o),y(c.c)),height=Math.max(2,Math.abs(y(c.o)-y(c.c)));ctx.fillRect(x-bw/2,top,bw,height)});const yy=y(base);ctx.setLineDash([4,4]);ctx.strokeStyle=change>=0?"#25c994":"#ff6577";ctx.beginPath();ctx.moveTo(pad.l,yy);ctx.lineTo(w-pad.r+2,yy);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=change>=0?"#176f59":"#a92f47";ctx.fillRect(w-pad.r+3,yy-9,pad.r-6,18);ctx.fillStyle="#fff";ctx.fillText(base<.01?base.toFixed(6):base<1?base.toFixed(4):base.toLocaleString("en-US",{maximumFractionDigits:2}),w-pad.r+6,yy+3);ctx.fillStyle="#708096";ctx.fillText(timeframe+" · illustrative candles",pad.l,h-8)}
+window.addEventListener("resize",()=>{if(document.getElementById("tradingPage").classList.contains("active"))drawCandles()});
+document.getElementById("assetSearch").addEventListener("input",renderAssets);
+renderCategories();renderAll();renderTape();loadChart();
+</script>
+</body>
+</html>
